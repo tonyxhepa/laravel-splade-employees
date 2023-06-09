@@ -1,17 +1,9 @@
 <script setup></script>
 <template>
     <aside
-        class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
+        class="flex flex-col w-64 min-h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700"
     >
-        <a href="#">
-            <img
-                class="w-auto h-7"
-                src="https://merakiui.com/images/logo.svg"
-                alt=""
-            />
-        </a>
-
-        <div class="flex flex-col justify-between flex-1 mt-6">
+        <div class="flex flex-col justify-between flex-1 mt-2">
             <nav class="-mx-3 space-y-6">
                 <a
                     class="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-200 hover:text-gray-700"
