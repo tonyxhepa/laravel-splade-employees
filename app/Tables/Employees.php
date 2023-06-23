@@ -71,7 +71,7 @@ class Employees extends AbstractTable
             ->column('id', sortable: true)
             ->column('first_name', sortable: true)
             ->column('last_name', sortable: true)
-            ->column(key: 'country.name', label: 'Country')
+            ->column(key: 'city.name', label: 'City')
             ->column(key: 'department.name', label: 'Departrment')
             ->column('action')
             ->selectFilter(

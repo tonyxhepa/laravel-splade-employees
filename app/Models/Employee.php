@@ -11,6 +11,11 @@ class Employee extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'birth_date' => 'date',
+        'date_hired' => 'date',
+    ];
+
     public function country()
     {
         return $this->belongsTo(Country::class);
