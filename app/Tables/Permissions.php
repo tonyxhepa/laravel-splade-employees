@@ -4,8 +4,12 @@ namespace App\Tables;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use ProtoneMedia\Splade\AbstractTable;
 use ProtoneMedia\Splade\SpladeTable;
+use Spatie\Permission\Models\Permission as ModelsPermission;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class Permissions extends AbstractTable
 {
@@ -36,7 +40,18 @@ class Permissions extends AbstractTable
      */
     public function for()
     {
-        return Permission::query();
+        $globalSearch = AllowedFilter::callback('global', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                Collection::wrap($value)->each(function ($value) use ($query) {
+                    $query
+                        ->orWhere('name', 'LIKE', "%{$value}%");
+                });
+            });
+        });
+        return QueryBuilder::for(ModelsPermission::class)
+            ->defaultSort('id')
+            ->allowedSorts(['id', 'name'])
+            ->allowedFilters(['id', 'name', $globalSearch]);
     }
 
     /**
@@ -48,14 +63,10 @@ class Permissions extends AbstractTable
     public function configure(SpladeTable $table)
     {
         $table
-            ->withGlobalSearch(columns: ['id'])
-            ->column('id', sortable: true);
-
-            // ->searchInput()
-            // ->selectFilter()
-            // ->withGlobalSearch()
-
-            // ->bulkAction()
-            // ->export()
+            ->withGlobalSearch(columns: ['name'])
+            ->column('id', sortable: true)
+            ->column('name', sortable: true)
+            ->column('action')
+            ->paginate(15);
     }
 }
